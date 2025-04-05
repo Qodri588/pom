@@ -18,33 +18,32 @@
     }
     .receipt-container {
       margin: 0 auto;
-      padding: 10px;
+      padding: 2px;
       background: #fff;
-      font-size: 13px;
-      border: 1px solid #ddd;
+      
+      line-height: 19px;
     }
     .receipt-header{
       text-align: center;
     }
     .receipt-footer {
-      text-align: justify;
+      text-align: left;
     }
     .separator {
-      border-top: 2px dashed black;
-      margin: 5px 0;
+      border-top: 2.5px dashed black;
+      margin-bottom: 10px;
+      margin-top: 10px;
     }
     .line {
       display: flex;
       justify-content: space-between;
-      font-size: 0.9rem;
+      
     }
-    .receipt-title {
-      font-weight: bold;
-      font-size: 1rem;
-    }
+    
     .input-label {
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 12px;
+    
     }
   </style>
 </head>
@@ -168,7 +167,7 @@
               <label class="input-label">Lebar Printer</label>
               <select class="form-select form-select-sm" x-model="selectedPrinterWidth">
                 <option value="58">58 mm</option>
-                <option value="78">80 mm (disesuaikan)</option>
+                <option value="58">80 mm (disesuaikan)</option>
                 <option value="100">100 mm</option>
               </select>
             </div>
@@ -195,91 +194,109 @@
           </div>
         </div>
       </div>
-      <!-- Kolom Preview Struk -->
+     <!-- Kolom Preview Struk -->
 <div class="col-md-6">
   <h6 class="text-center mb-2">Preview Struk</h6>
+
+  <!-- Container utama untuk struk -->
   <div class="receipt-container" :style="{ fontFamily: selectedFont, width: selectedPrinterWidth + 'mm' }" id="receiptPreview">
+
+    <!-- Header Struk -->
     <div class="receipt-header">
+      <!-- Logo SPBU -->
       <template x-if="logo">
         <img :src="logo" alt="Logo SPBU" style="max-height: 40px; margin-bottom: 5px;" />
       </template>
-      <div style="font-size:24px;font-weight:bold" x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></div>
+
+      <!-- Informasi SPBU -->
+      <div style="font-size:18px;font-weight:900;margin-bottom:10px;" x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></div>
+      
+      <div style="font-size:14px;">
       <div class="receipt-title" x-text="namaSPBU || 'Nama SPBU'"></div>
       <div class="receipt-title" x-text="alamat || 'Alamat SPBU'"></div>
     </div>
-    <div class="separator"></div>
-    <div class="mb-1">
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Shift</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="shift"></div>
-      </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">No.</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="noTransaksi"></div>
-      </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Waktu</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="formatWaktu(waktu)"></div>
-      </div>
     </div>
-    <div class="separator"></div>
-    <div class="mb-1">
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Pompa</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="pompa"></div>
+
+    <!-- Informasi Transaksi -->
+    <div style="font-size:14px;font-weight:semi-bold;letter-spacing:-0.8px; word-spacing:-6px">
+<!--         -------------------------- -->
+      <div class="mb-1">
+        <div>
+          Shift: <span x-text="shift"></span> <span class="mx-2"></span>
+           No. Trans: <span x-text="noTransaksi"></span>
+        </div>
+        <div>
+          Waktu : <span x-html="formatWaktu(waktu)"></span>
+        </div>
+        
+        
+        ----------------------------
       </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Produk</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="produk"></div>
+      <!-- Detail Pembelian -->
+      <div class="mb-1">
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">Pompa</div>
+          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col text-start" x-text="pompa"></div>
+        </div>
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">Produk</div>
+          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col text-start" x-text="produk"></div>
+        </div>
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">Harga/L</div>
+          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col text-start">Rp. 10,000</div>
+        </div>
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">Volume</div>
+          <div class="col-auto mr-3 px-1">: (L) </div>
+          <div class="col text-start" x-text="volume ? volume : ''"></div>
+        </div>
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">Total</div>
+          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col text-start" x-text="computedTotalHarga ? formatRupiah(computedTotalHarga) : ''"></div>
+        </div>
       </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Harga/L</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start">Rp 10.000</div>
+
+      <!-- Informasi Tambahan -->
+      <div class="mb-1">
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">Operator</div>
+          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col text-start" x-text="operator"></div>
+        </div>
+        
+      <!--   --------------------------
+        
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">Cash</div>
+          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col text-end" x-text="cash ? formatRupiah(cash) : ''"></div>
+        </div>
+        
+         -->
+        <!--
+        <div class="line d-flex align-items-center">
+          <div class="  col-4 text-start">No.Plat</div>
+          <div class="col-auto"> : </div>
+          <div class="col text-start" x-text="noPlat"></div>
+        </div> -->
       </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Volume</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="volume ? volume + ' L' : ''"></div>
-      </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Total</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="computedTotalHarga ? formatRupiah(computedTotalHarga) : ''"></div>
-      </div>
+
+        ----------------------------
+
+      <!-- Footer Struk -->
+      <div class="receipt-footer" style="word-spacing:-3px" x-html="formatFooter(footer || defaultFooter)"></div>
     </div>
-    <div class="separator"></div>
-    <div class="mb-1">
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Operator</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="operator"></div>
-      </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">Cash</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="cash ? formatRupiah(cash) : ''"></div>
-      </div>
-      <div class="line d-flex align-items-center">
-        <div class="col-3 text-start">No.Plat</div>
-        <div class="col-auto">:</div>
-        <div class="col text-start" x-text="noPlat"></div>
-      </div>
-    </div>
-    <div class="separator"></div>
-    <div class="receipt-footer" x-html="formatFooter(footer || defaultFooter)"></div>
-  </div>
-  <div class="text-center mt-2">
-    <button class="btn btn-success btn-sm" @click="saveAsImage()">Save as Image</button>
   </div>
 </div>
-  </div>
-  
+<!-- Tombol Simpan Struk -->
+<div class="text-center mt-2">
+  <button class="btn btn-success btn-sm" @click="saveAsImage()">Save as Image</button>
+</div>
   <script>
     function receiptApp() {
       return {
@@ -292,15 +309,15 @@
         waktu: '',
         pompa: '',
         produk: 'PERTALITE',
-        volume: 0,
+        volume:0,
         operator: '',
         cash: 0,
         noPlat: '',
         footer: '',
         selectedFont: 'Courier New, Courier, monospace',
-        selectedPrinterWidth: "78",
+        selectedPrinterWidth: "58",
         hargaPerLiter: 10000,
-        defaultFooter: 'ANDA MENGGUNAKAN SUBSIDI BBM DARI NEGARA:BIO SOLAR RP. 6.000, -/LITER DAN PERTAMINA RP. 3.250, -/LITER<br>MARI GUNAKAN PERTAMAX SERIES DAN DEX SERIES, SUBSIDI HANYA UNTUK YANG BERHAK MENERIMA',
+        defaultFooter: 'MARI GUNAKAN PERTAMAX SERIES DAN DEX SERIES, SUBSIDI HANYA UNTUK YANG BERHAK MENERIMA',
         templateName: '',
         get computedTotalHarga() {
           const vol = parseFloat(this.volume) || 0;
@@ -309,20 +326,22 @@
         get computedChange() {
           return (parseFloat(this.cash) || 0) - this.computedTotalHarga;
         },
-        formatWaktu(datetime) {
-          if (!datetime) return '';
-          const d = new Date(datetime);
-          const dd = String(d.getDate()).padStart(2, '0');
-          const mm = String(d.getMonth() + 1).padStart(2, '0');
-          const yyyy = d.getFullYear();
-          const hh = String(d.getHours()).padStart(2, '0');
-          const min = String(d.getMinutes()).padStart(2, '0');
-          return `${dd}/${mm}/${yyyy} ${hh}:${min}`;
-        },
+formatWaktu(datetime) {
+  if (!datetime) return '';
+  const d = new Date(datetime);
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  const hh = String(d.getHours()).padStart(2, '0');
+  const min = String(d.getMinutes()).padStart(2, '0');
+  const ss = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+  return `${dd}/${mm}/${yyyy}&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp${hh}:${min}:${ss}`;
+},
         formatRupiah(value) {
-          const number = parseFloat(value) || 0;
-          return 'Rp ' + new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0 }).format(number);
-        },
+  const number = parseFloat(value) || 0;
+  const formatted = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0 }).format(number);
+  return 'Rp. ' + formatted.replace(/\./g, ',');
+},
         formatFooter(text) {
           return text.replace('NEGARA:', 'NEGARA:<br>');
         },
@@ -391,7 +410,7 @@
               this.noPlat = tpl.noPlat || '';
               this.footer = tpl.footer || '';
               this.selectedFont = tpl.selectedFont || 'Courier New, Courier, monospace';
-              this.selectedPrinterWidth = tpl.selectedPrinterWidth || "78";
+              this.selectedPrinterWidth = tpl.selectedPrinterWidth || "58";
               this.templateName = tpl.templateName || '';
               alert("Template berhasil di-upload dan dimuat!");
             } catch (err) {
