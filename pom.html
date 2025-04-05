@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuel Receipt Generator - Minimal</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Inline CSS -->
+  <style>
+/* css/style.css */
+body {
+  background-color: #f8f9fa;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.receipt-container {
+  margin: 0 auto;
+  padding: 2px;
+  background: #fff;
+  line-height: 19px;
+}
+
+.receipt-header {
+  text-align: left;
+}
+
+.receipt-footer {
+  text-align: left;
+}
+
+.separator {
+  border-top: 2.5px dashed black;
+  margin: 10px 0;
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-label {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Memuat font */
+@font-face {
+  font-family: 'DroidSansMono';
+  src: url('font/DroidSansMono.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('font/My_Font.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'DroidSansMonoBold';
+  src: url('font/DroidSansMonoW01-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'TelidonBold';
+  src: url('font/Telidon-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'DroidSansMonoRegular';
+  src: url('font/DroidSansMonoW07-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'TelidonHv';
+  src: url('font/TelidonHv.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MyFontRegular';
+  src: url('font/MyFontRegular.woff') format('woff');
+}
+
+#receiptPreview {
+  width: 58mm;
+  font-family: 'TelidonHv', Sans-Serif;
+  font-weight: normal;
+  word-spacing: -4px;
+  letter-spacing: -0.2px;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h1 {
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h4 {
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h6 {
+  font-size: 10px;
+}
+  </style>
+</head>
+<body>
+  <div class="container py-3" x-data="receiptApp()">
+    <h4 class="text-center mb-3">Generator Struk Pom Bensin</h4>
+    <div class="row">
+      <!-- ==================== FORM INPUT ==================== -->
+      <div class="col-md-6">
+        <div class="card p-2 mb-3">
+          <h6 class="mb-2">Input Data</h6>
+          <!-- Nomor Outlet -->
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label class="input-label">Nomor Outlet</label>
+              <input type="text" class="form-control form-control-sm" x-model="nomorOutlet" placeholder="Nomor Outlet" />
+            </div>
+          </div>
+          <!-- Nama SPBU & Alamat -->
+          <div class="row">
+            <div class="col-6 mb-2">
+              <label class="input-label">Nama SPBU</label>
+              <input type="text" class="form-control form-control-sm" x-model="namaSPBU" placeholder="Nama SPBU" />
+            </div>
+            <div class="col-6 mb-2">
+              <label class="input-label">Alamat</label>
+              <input type="text" class="form-control form-control-sm" x-model="alamat" placeholder="Alamat" />
+            </div>
+          </div>
+          <!-- No. Transaksi -->
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label class="input-label">No. Transaksi</label>
+              <input type="text" class="form-control form-control-sm" x-model="noTransaksi" placeholder="No. Transaksi" />
+            </div>
+          </div>
+          <!-- Waktu & Pulau/Pompa -->
+          <div class="row">
+            <div class="col-6 mb-2">
+              <label class="input-label">Waktu</label>
+              <input type="datetime-local" class="form-control form-control-sm" x-model="waktu" />
+            </div>
+            <div class="col-6 mb-2">
+              <label class="input-label">Pulau/Pompa</label>
+              <input type="text" class="form-control form-control-sm" x-model="pompa" placeholder="Pulau/Pompa" />
+            </div>
+          </div>
+          <!-- Volume -->
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label class="input-label">Volume (Liter)</label>
+              <input type="number" class="form-control form-control-sm" x-model.number="volume" min="0" placeholder="Volume" />
+            </div>
+          </div>
+          <!-- Operator -->
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label class="input-label">Operator</label>
+              <input type="text" class="form-control form-control-sm" x-model="operator" placeholder="Operator" />
+            </div>
+          </div>
+          <!-- Footer -->
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label class="input-label">Footer</label>
+              <input type="text" class="form-control form-control-sm" x-model="footer" placeholder="Footer" />
+            </div>
+          </div>
+          <!-- Load Config -->
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label class="input-label">Load Config</label>
+              <input type="file" class="form-control form-control-sm" accept=".json" @change="uploadTemplate($event)" />
+            </div>
+          </div>
+          <!-- Tombol Save as Image & Save Template -->
+          <div class="row">
+            <div class="col-6 mb-2">
+              <button class="btn btn-success btn-sm w-100" @click="saveAsImage()">Save as Image</button>
+            </div>
+            <div class="col-6 mb-2">
+              <button class="btn btn-primary btn-sm w-100" @click="downloadTemplate()">Save Template</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ==================== PREVIEW STRUK (tetap seperti preview.pho) ==================== -->
+      <div class="col-md-6">
+        <!-- Start Preview Section -->
+        <h6 class="text-center mb-2">Preview Struk</h6>
+        
+        
+        
+        
+        <div class="receipt-container" id="receiptPreview">
+          <!-- Header Struk -->
+          <h2>
+            PERTAMINA PASTI PAS
+          </h2>
+          
+            <span class="ml-4">SPBU </span><span x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></span>
+          
+          <br><br>
+          <span class="receipt-title" x-text="alamat || 'Alamat SPBU'"></span>
+
+          <!-- Informasi Transaksi -->
+          
+  
+          <div class="info-pembelian">
+            
+            <br>
+            
+<!-- Tampilan tanggal dan waktu -->
+  <div style="display: flex; justify-content: space-between;">
+    <div class="text-start">
+      <span x-text="formatDate(waktu)"></span>
+    </div>
+    <div class="text-end">
+      <span x-text="formatTime(waktu)"></span>
+    </div>
+
+              </div>
+            </div>
+<span>Receipt No. :</span> <span x-text="noTransaksi"></span>
+                
+            
+            <br><br>
+            <!-- Detail Pembelian -->
+            <div class="mb-1">
+              <div class="line d-flex align-items-center">
+                <div class="col-4 text-start">Pump No.</div>
+                <div class="col-auto mr-3 px-1"></div>
+                <div class="col text-end" x-text="pompa"></div>
+              </div>
+              
+              <div class="line d-flex align-items-center">
+                <div class="col-auto text-start">Grade</div>
+                <div class="col-auto mr-3 px-1"></div>
+                <div class="col text-end">Pertalite</div>
+              </div>
+              <div class="line d-flex align-items-center">
+                <div class="col-auto text-start">Unit Price Rp/L </div>
+                <div class="col-auto mr-3 px-1"></div>
+                <div class="col text-end">10000</div>
+              </div>
+              <div class="line d-flex align-items-center">
+                <div class="col-4 text-start">Volume(L)</div>
+                <div class="col-auto mr-3 px-1"></div>
+                <div class="col text-end" x-text="volume ? volume : ''"></div>
+              </div>
+              <div class="line d-flex align-items-center">
+                <div class="col-4 text-start"><b>Amount</b></div>
+                <div class="col-auto mr-3 px-1"></div>
+                <div class="col text-end fw-bold" x-html="computedTotalHarga ? formatRupiah(computedTotalHarga) : ''"></div>
+            </div>
+            <!-- Informasi Tambahan -->
+           
+              <br>
+              <!-- Footer Struk -->
+              <div class="receipt-footer" x-text="footer || 'Terima Kasih dan Selamat Jalan'"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AlpineJS & html2canvas -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <!-- Script JS terpisah -->
+  <script src="script.js"></script>
+</body>
+</html>
