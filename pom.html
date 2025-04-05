@@ -45,20 +45,50 @@ body {
 
 .input-label {
   font-weight: 600;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 /* Memuat font */
 @font-face {
+  font-family: 'DroidSansMono';
+  src: url('font/DroidSansMono.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('font/My_Font.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'DroidSansMonoBold';
+  src: url('font/DroidSansMonoW01-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'TelidonBold';
+  src: url('font/Telidon-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'DroidSansMonoRegular';
+  src: url('font/DroidSansMonoW07-Regular.woff') format('woff');
+}
+
+@font-face {
   font-family: 'TelidonHv';
-  src: url('TelidonHv.woff') format('woff');
+  src: url('font/TelidonHv.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MyFontRegular';
+  src: url('font/MyFontRegular.woff') format('woff');
 }
 
 #receiptPreview {
   width: 58mm;
   font-family: 'TelidonHv', Sans-Serif;
   font-weight: normal;
-  word-spacing: -4px;
+  word-spacing: -3px;
   letter-spacing: -0.2px;
   margin-bottom: 1px;
 }
@@ -87,12 +117,11 @@ body {
 }
 
 #receiptPreview h6 {
-  font-size: 10px;
+  font-size: 12px;
 }
   </style>
 </head>
 <body>
-  <h1>Struk Generator M. Qodri</h1>
   <div class="container py-3" x-data="receiptApp()">
     <h4 class="text-center mb-3">Generator Struk Pom Bensin</h4>
     <div class="row">
@@ -101,55 +130,49 @@ body {
         <div class="card p-2 mb-3">
           <h6 class="mb-2">Input Data</h6>
           <!-- Nomor Outlet -->
+          
           <div class="row">
-            <div class="col-12 mb-2">
+<div class="col-6 mb-2">
+              <label class="input-label">Nama SPBU</label>
+              <input type="text" class="form-control form-control-sm" x-model="namaSPBU" placeholder="Nama SPBU"
+              />
+            </div>
+              <div class="col-3 mb-2">
               <label class="input-label">Nomor Outlet</label>
               <input type="text" class="form-control form-control-sm" x-model="nomorOutlet" placeholder="Nomor Outlet" />
             </div>
-          </div>
-          <!-- Nama SPBU & Alamat -->
-          <div class="row">
-            <div class="col-6 mb-2">
-              <label class="input-label">Nama SPBU</label>
-              <input type="text" class="form-control form-control-sm" x-model="namaSPBU" placeholder="Nama SPBU" />
+            <div class="col-3 mb-2">
+              <label class="input-label">No. Transaksi</label>
+              <input type="number" class="form-control form-control-sm" x-model="noTransaksi" placeholder="No. Transaksi" />
             </div>
-            <div class="col-6 mb-2">
+          </div>
+          
+          <!-- Alamat -->
+          <div class="row">
+            <div class="col-12 mb-2">
               <label class="input-label">Alamat</label>
               <input type="text" class="form-control form-control-sm" x-model="alamat" placeholder="Alamat" />
             </div>
           </div>
           <!-- No. Transaksi -->
-          <div class="row">
-            <div class="col-12 mb-2">
-              <label class="input-label">No. Transaksi</label>
-              <input type="text" class="form-control form-control-sm" x-model="noTransaksi" placeholder="No. Transaksi" />
-            </div>
-          </div>
+
           <!-- Waktu & Pulau/Pompa -->
           <div class="row">
-            <div class="col-6 mb-2">
+            <div class="col-4 mb-2">
               <label class="input-label">Waktu</label>
               <input type="datetime-local" class="form-control form-control-sm" x-model="waktu" />
             </div>
-            <div class="col-6 mb-2">
-              <label class="input-label">Pulau/Pompa</label>
-              <input type="text" class="form-control form-control-sm" x-model="pompa" placeholder="Pulau/Pompa" />
+            <div class="col-4 mb-2">
+              <label class="input-label">Pump</label>
+              <input type="number" class="form-control form-control-sm" x-model="pompa" placeholder="Pulau/Pompa" />
             </div>
-          </div>
-          <!-- Volume -->
-          <div class="row">
-            <div class="col-12 mb-2">
+            <div class="col-4 mb-2">
               <label class="input-label">Volume (Liter)</label>
               <input type="number" class="form-control form-control-sm" x-model.number="volume" min="0" placeholder="Volume" />
             </div>
           </div>
-          <!-- Operator -->
-          <div class="row">
-            <div class="col-12 mb-2">
-              <label class="input-label">Operator</label>
-              <input type="text" class="form-control form-control-sm" x-model="operator" placeholder="Operator" />
-            </div>
-          </div>
+         
+          
           <!-- Footer -->
           <div class="row">
             <div class="col-12 mb-2">
@@ -165,12 +188,16 @@ body {
             </div>
           </div>
           <!-- Tombol Save as Image & Save Template -->
-          <div class="row">
+          <div class="row my-3">
             <div class="col-6 mb-2">
-              <button class="btn btn-success btn-sm w-100" @click="saveAsImage()">Save as Image</button>
+              <button class="btn btn-success btn-sm w-100"
+              
+              @click="saveAsImage()">Save as Image</button>
             </div>
             <div class="col-6 mb-2">
-              <button class="btn btn-primary btn-sm w-100" @click="downloadTemplate()">Save Template</button>
+              <button class="btn btn-primary btn-sm w-100"
+              
+              @click="downloadTemplate()">Save Template</button>
             </div>
           </div>
         </div>
@@ -186,9 +213,9 @@ body {
         
         <div class="receipt-container" id="receiptPreview">
           <!-- Header Struk -->
-          <h2>
+          <h1>
             PERTAMINA PASTI PAS
-          </h2>
+          </h1>
           
             <span class="ml-4">SPBU </span><span x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></span>
           
