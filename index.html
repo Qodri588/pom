@@ -220,12 +220,13 @@
   <h6 class="text-center mb-1">Preview Struk</h6>
 
   <!-- Container utama untuk struk -->
-  <div class="receipt-container px-1" :style="{ fontFamily: selectedFont, width: selectedPrinterWidth + 'mm' }" id="receiptPreview" 
+  <div class="receipt-container px-1" :style="{ fontFamily: selectedFont, width: 58 + 'mm' }" id="receiptPreview" 
   style="
   font-size: 12px;
   letter-spacing:-1px; 
   word-spacing:-3px;
   line-height:14px;
+  
   ">
 
     <!-- Header Struk -->
@@ -313,12 +314,12 @@ letter-spacing:-0.8px; word-spacing:-3px
         </div> -->
       </div>
 
-        -----------------------------------
+        ---------------------------------
       <div>CASH</div>
       <div class="text-end"
       x-text="computedTotalHarga ? formatRupiah(computedTotalHarga) : ''"
       ></div>
-        -----------------------------------
+        ---------------------------------
       <!-- Footer Struk -->
       <div class="receipt-footer" style="word-spacing:-3px" x-html="formatFooter(footer || defaultFooter)"></div>
     </div>
