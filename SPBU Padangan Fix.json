@@ -1,0 +1,19 @@
+{
+  "logo": "logo.png",
+  "nomorOutlet": "54.621.03",
+  "namaSPBU": "SPBU PADANGAN",
+  "alamat": "JL. SURABAYA NO. 420",
+  "shift": "1",
+  "noTransaksi": "2526104",
+  "waktu": "2025-03-19T10:47",
+  "pompa": "3",
+  "produk": "PERTALITE",
+  "volume": 3.7,
+  "operator": "M. AFANDI",
+  "cash": 0,
+  "noPlat": "",
+  "footer": "",
+  "selectedFont": "Courier New, Courier, monospace",
+  "selectedPrinterWidth": "58",
+  "templateName": "SPBU Padangan Fix"
+}
