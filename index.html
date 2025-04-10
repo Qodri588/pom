@@ -18,10 +18,11 @@
     }
     .receipt-container {
       margin: 0 auto;
-      padding: 2px;
-      background: #fff;
       
-      line-height: 19px;
+      background: #fff;
+      padding-bottom: 1em;
+      padding-top: 1em;
+    
     }
     .receipt-header{
       text-align: center;
@@ -47,9 +48,7 @@
     }
   </style>
 </head>
-  
 <body>
-  <h1>Struk Generator - M. Qodri</h1>
   <div class="container py-3" x-data="receiptApp()">
     <h4 class="text-center mb-3">Generator Struk Pom Bensin</h4>
     <div class="row">
@@ -152,7 +151,7 @@
               <input type="text" class="form-control form-control-sm" x-model="footer" placeholder="Tulis pesan footer" />
             </div>
             <div class="col-6 mb-2">
-              <!-- Pilihan Font Family -->
+              Pilihan Font Family
               <label class="input-label">Font Family</label>
               <select class="form-select form-select-sm" x-model="selectedFont">
                 <option value="Courier New, Courier, monospace">Courier New</option>
@@ -201,73 +200,79 @@
   <h6 class="text-center mb-2">Preview Struk</h6>
 
   <!-- Container utama untuk struk -->
-  <div class="receipt-container" :style="{ fontFamily: selectedFont, width: selectedPrinterWidth + 'mm' }" id="receiptPreview">
+  <div class="receipt-container px-2" :style="{ fontFamily: selectedFont, width: selectedPrinterWidth + 'mm' }" id="receiptPreview" 
+  style="
+  font-size: 12px;
+  letter-spacing:-1px; 
+  word-spacing:-3px;
+  line-height:14px;
+  ">
 
     <!-- Header Struk -->
     <div class="receipt-header">
       <!-- Logo SPBU -->
       <template x-if="logo">
-        <img :src="logo" alt="Logo SPBU" style="max-height: 40px; margin-bottom: 5px;" />
+        <img :src="logo" alt="Logo SPBU" style="max-height: 30px; margin-bottom: none;" />
       </template>
 
       <!-- Informasi SPBU -->
-      <div style="font-size:18px;font-weight:900;margin-bottom:10px;" x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></div>
+      <div style="font-size:18px;font-weight:900;margin-bottom:none;" x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></div>
       
-      <div style="font-size:14px;">
+      <div style="font-size: 12px;
+letter-spacing:-0.8px; word-spacing:-3px
+      ">
       <div class="receipt-title" x-text="namaSPBU || 'Nama SPBU'"></div>
       <div class="receipt-title" x-text="alamat || 'Alamat SPBU'"></div>
     </div>
     </div>
 
     <!-- Informasi Transaksi -->
-    <div style="font-size:14px;font-weight:semi-bold;letter-spacing:-0.8px; word-spacing:-6px">
+    <div style="font-size:12px;font-weight:semi-bold;letter-spacing:-1px; word-spacing:-3px">
 <!--         -------------------------- -->
-      <div class="mb-1">
+      <div  >
         <div>
-          Shift: <span x-text="shift"></span> <span class="mx-2"></span>
-           No. Trans: <span x-text="noTransaksi"></span>
+          <span style="font-size:12px">Shift : </span><span x-text="shift"></span> <span class="mr-1"></div>
+           No. Trans : <span style="font-size:12px" x-text="noTransaksi"></span>
         </div>
-        <div>
-          Waktu : <span x-html="formatWaktu(waktu)"></span>
+        <div class="d-flex">
+          <span style="font-size:12px">Waktu : </span><span style="font-size:12px" x-html="formatWaktu(waktu)"></span>
         </div>
-        
-        
-        ----------------------------
       </div>
+        --------------------------------
       <!-- Detail Pembelian -->
-      <div class="mb-1">
+      <div  >
         <div class="line d-flex align-items-center">
-          <div class="  col-4 text-start">Pompa</div>
-          <div class="col-auto mr-3 px-1">:</div>
+          <div class="  col-4 text-start">Pulau/Pompa</div>
+          <div class="col-auto  px-1">:</div>
           <div class="col text-start" x-text="pompa"></div>
         </div>
         <div class="line d-flex align-items-center">
-          <div class="  col-4 text-start">Produk</div>
-          <div class="col-auto mr-3 px-1">:</div>
+          <div class="  col-4 text-start">Nama Produk</div>
+          <div class="col-auto  px-1">:</div>
           <div class="col text-start" x-text="produk"></div>
         </div>
         <div class="line d-flex align-items-center">
-          <div class="  col-4 text-start">Harga/L</div>
-          <div class="col-auto mr-3 px-1">:</div>
+          <div class="  col-4 text-start">Harga/Liter</div>
+          <div class="col-auto  px-1">:</div>
           <div class="col text-start">Rp. 10,000</div>
         </div>
         <div class="line d-flex align-items-center">
           <div class="  col-4 text-start">Volume</div>
-          <div class="col-auto mr-3 px-1">: (L) </div>
+          <div class="col-auto  px-1">:  (L) </div>
           <div class="col text-start" x-text="volume ? volume : ''"></div>
         </div>
         <div class="line d-flex align-items-center">
-          <div class="  col-4 text-start">Total</div>
-          <div class="col-auto mr-3 px-1">:</div>
+          <div class="  col-4 text-start">Total Harga</div>
+          <div class="col-auto  px-1">:</div>
           <div class="col text-start" x-text="computedTotalHarga ? formatRupiah(computedTotalHarga) : ''"></div>
         </div>
       </div>
 
       <!-- Informasi Tambahan -->
-      <div>
+      <div  >
         <div class="line d-flex align-items-center">
           <div class="  col-4 text-start">Operator</div>
-          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col-auto  px-1">:</div>
           <div class="col text-start" x-text="operator"></div>
         </div>
         
@@ -275,7 +280,7 @@
         
         <div class="line d-flex align-items-center">
           <div class="  col-4 text-start">Cash</div>
-          <div class="col-auto mr-3 px-1">:</div>
+          <div class="col-auto  px-1">:</div>
           <div class="col text-end" x-text="cash ? formatRupiah(cash) : ''"></div>
         </div>
         
@@ -288,8 +293,12 @@
         </div> -->
       </div>
 
-        ----------------------------
-
+        --------------------------------
+      <div>CASH</div>
+      <div class="text-end"
+      x-text="computedTotalHarga ? formatRupiah(computedTotalHarga) : ''"
+      ></div>
+        --------------------------------
       <!-- Footer Struk -->
       <div class="receipt-footer" style="word-spacing:-3px" x-html="formatFooter(footer || defaultFooter)"></div>
     </div>
@@ -316,7 +325,7 @@
         cash: 0,
         noPlat: '',
         footer: '',
-        selectedFont: 'Courier New, Courier, monospace',
+        selectedFont: 'Lucida Console, Monaco, monospace',
         selectedPrinterWidth: "58",
         hargaPerLiter: 10000,
         defaultFooter: 'MARI GUNAKAN PERTAMAX SERIES DAN DEX SERIES, SUBSIDI HANYA UNTUK YANG BERHAK MENERIMA',
@@ -337,7 +346,7 @@ formatWaktu(datetime) {
   const hh = String(d.getHours()).padStart(2, '0');
   const min = String(d.getMinutes()).padStart(2, '0');
   const ss = String(Math.floor(Math.random() * 60)).padStart(2, '0');
-  return `${dd}/${mm}/${yyyy}&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp${hh}:${min}:${ss}`;
+  return `${dd}/${mm}/${yyyy}&nbsp;${hh}:${min}:${ss}`;
 },
         formatRupiah(value) {
   const number = parseFloat(value) || 0;
