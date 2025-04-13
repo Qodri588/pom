@@ -13,14 +13,19 @@
     .receipt-container { margin: 0 auto; background: #fff; padding: 1em 0; }
 
     #receiptPreview {
+      padding: 3px;
       font-family: Lucida Console, Monaco, monospace;
       font-size: 12px;
       font-weight: 400; /* semi-bold */
-      letter-spacing: -1px;
+      letter-spacing: -0.75px;
       word-spacing: 0px;
       line-height: 13px;
     }
-
+  .garis{
+  //  letter-spacing: -2px;
+    text-align: justify;
+    text-justify: inter-word;
+  }
     .receipt-header { text-align: center; }
     .receipt-footer { text-align: left; }
     .separator { border-top: 2px dashed black; margin: 5px 0; }
@@ -55,16 +60,16 @@
             <div class="col-12 mb-1"><label class="input-label">Footer</label><input type="text" class="form-control form-control-sm" x-model="footer" placeholder="Tulis pesan footer" /></div>
           </div>
           <div class="row">
-            <div class="col-3 mb-1"><button class="btn btn-primary btn-sm w-100" @click="downloadTemplate()">Unduh</button></div>
-            <div class="col-3 mb-1"><input type="file" class="form-control form-control-sm" accept=".json" @change="uploadTemplate($event)" /></div>
+            <div class="col-3 mb-1"><button class="btn btn-primary btn-sm w-100" @click="downloadTemplate()">Save</button></div>
+            <div class="col-9 mb-1"><input type="file" class="form-control form-control-sm" accept=".json" @change="uploadTemplate($event)" /></div>
           </div>
         </div>
       </div>
 
       <!-- Preview -->
       <div class="col-md-6">
-        <h6 class="text-center mb-1">Preview Struk</h6>
-        <div class="receipt-container px-1" id="receiptPreview" :style="{ width: selectedPrinterWidth + 'mm' }">
+        
+        <div class="receipt-container py-2" id="receiptPreview" :style="{ width: selectedPrinterWidth + 'mm' }">
           <div class="receipt-header">
             <template x-if="logo"><img class="my-1" :src="logo" alt="Logo SPBU" style="max-height: 35px;" /></template>
             <div style="font-size:18px; font-weight:bold" x-text="nomorOutlet || 'Nomor Outlet'" class="mb-1"></div>
@@ -84,7 +89,7 @@
               <span>Waktu:</span><span class="mx-1" x-html="formatWaktu(waktu)"></span>
             </div>
           </div>
-          <div class="garis">----------------------------------</div>
+          <div class="garis">---------------------------------</div>
 
           <div>
             <div class="line"><div class="col-4">Pulau/Pompa</div><div class="col-auto mx-0">:</div><div class="col px-1" x-text="pompa"></div></div>
@@ -93,14 +98,14 @@
             <div class="line"><div class="col-4">Volume</div><div class="col-auto mx-0">:</div>
 <span class="mx-1">(L)</span>
             <div class="col px-0" x-text="volume"></div></div>
-            <div class="line"><div class="col-4">Total Harga</div><div class="col-auto mx-0">:</div> <span class="mx-1">Rp.</span><div class="col px-1" x-text="formatRupiah(computedTotalHarga)"></div></div>
+            <div class="line"><div class="col-4">Total Harga</div><div class="col-auto mx-0">:</div> <span class="mx-1">Rp.</span><div class="col " x-text="formatRupiah(computedTotalHarga)"></div></div>
           </div>
 
           <div class="line"><div class="col-4">Operator</div><div class="col-auto mx-0">:</div><div class="col px-1" x-text="operator"></div></div>
-          <div class="garis">----------------------------------</div>
-          <div>CASH</div>
+          <div class="garis">---------------------------------</div>
+          <div style="letter-spacing:-0.25px">CASH</div>
           <div class="text-end" x-text="formatRupiah(computedTotalHarga)"></div>
-          <div class="garis">----------------------------------</div>
+          <div class="garis">---------------------------------</div>
           <div class="receipt-footer" x-html="formatFooter(footer || defaultFooter)"></div>
         </div>
       </div>
