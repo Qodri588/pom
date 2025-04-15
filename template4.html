@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuel Receipt Generator - Template Minimalis</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style>
+    body { background-color: #f8f9fa; }
+    .card { border: none; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .receipt-container { margin: 0 auto; background: #fff; padding: 1em 0; }
+    .col-45{
+      width: 65px;
+    }
+    #receiptPreview {
+      padding: 3px;
+      font-family: Lucida Console, Monaco, monospace;
+      font-size: 11px;
+      font-weight: 400; /* semi-bold */
+      letter-spacing: -0.75px;
+      word-spacing: 0px;
+      line-height: 13px;
+    }
+  .garis{
+  //  letter-spacing: -2px;
+    text-align: center;
+    text-justify: inter-word;
+  }
+    .receipt-header { text-align: center; }
+    .receipt-footer { text-align: left; }
+    .separator { border-top: 2px dashed black; margin: 5px 0; }
+    .line { display: flex; justify-content: space-between; }
+    .input-label { font-weight: 600; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container py-3" x-data="receiptApp()">
+    <div class="row">
+      <!-- Kolom Input -->
+      <div class="col-md-6">
+        <div class="card p-2 mb-3">
+          <!-- Inputan -->
+          <div class="row">
+            <div class="col-4 mb-1"><label class="input-label">Nama SPBU</label><input type="text" class="form-control form-control-sm" x-model="namaSPBU" /></div>
+            <div class="col-45 mb-1"><label class="input-label">Operator</label><input type="text" class="form-control form-control-sm" x-model="operator" /></div>
+            <div class="col-4 mb-1"><label class="input-label">Nomor Outlet</label><input type="text" class="form-control form-control-sm" x-model="nomorOutlet" /></div>
+          </div>
+          <div class="row"><div class="col-12 mb-1"><label class="input-label">Alamat</label><input type="text" class="form-control form-control-sm" x-model="alamat" /></div></div>
+          <div class="row">
+            <div class="col-2 mb-1"><label class="input-label">Shift</label><input type="text" class="form-control form-control-sm" x-model="shift" /></div>
+            <div class="col-3 mb-1"><label class="input-label">No.</label><input type="text" class="form-control form-control-sm" x-model="noTransaksi" /></div>
+            <div class="col-2 mb-1"><label class="input-label">Pompa</label><input type="text" class="form-control form-control-sm" x-model="pompa" /></div>
+            <div class="col-5 mb-1"><label class="input-label">Time</label><input type="datetime-local" class="form-control form-control-sm" x-model="waktu" /></div>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-1"><label class="input-label">Volume (Liter)</label><input type="number" class="form-control form-control-sm" x-model.number="volume" min="0" /></div>
+            <div class="col-6 mb-1"><label class="input-label">Total Harga</label><input type="text" class="form-control form-control-sm" :value="formatRupiah(computedTotalHarga)" readonly /></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-12 mb-1"><label class="input-label">Footer</label><input type="text" class="form-control form-control-sm" x-model="footer" placeholder="Tulis pesan footer" /></div>
+          </div>
+          <div class="row">
+            <div class="col-3 mb-1"><button class="btn btn-primary btn-sm w-100" @click="downloadTemplate()">Save</button></div>
+            <div class="col-9 mb-1"><input type="file" class="form-control form-control-sm" accept=".json" @change="uploadTemplate($event)" /></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="col-md-6">
+        
+        <div class="receipt-container py-2" id="receiptPreview" :style="{ width: selectedPrinterWidth + 'mm' }">
+          <div class="receipt-header text-uppercase">
+            <template x-if="logo"><img class="my-1" :src="logo" alt="Logo SPBU" style="max-height: 50px;" /></template>
+            <div style="font-size:16px; font-weight:bold " x-text="nomorOutlet || 'Nomor Outlet'" class="mb-1"></div>
+            <div>
+              <div x-text="namaSPBU || 'Nama SPBU'"></div>
+              <div x-text="alamat || 'Alamat SPBU'"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="d-flex">
+              <span>Shift:</span><span class="mx-1" x-text="shift"></span>
+              <span class="mx-3"></span>
+              <span>No. Trans:</span><span class="mx-1" x-text="noTransaksi"></span>
+            </div>
+            <div class="d-flex">
+              <span>Waktu:</span><span class="mx-1" x-html="formatWaktu(waktu)"></span>
+            </div>
+          </div>
+          <div class="garis">---------------------------------</div>
+
+          <div>
+            <div class="line"><div class="col-45">Pulau/Pompa</div><div class="col-auto mx-0">: </div><div class="col px-1" x-text="pompa"></div></div>
+            <div class="line"><div class="col-45">Nama Produk</div><div class="col-auto mx-0">:</div><div class="col px-1" x-text="produk"></div></div>
+            <div class="line"><div class="col-45">Harga/Liter</div><div class="col-auto mx-0">:</div><div class="col px-1">Rp. 10,000</div></div>
+            <div class="line"><div class="col-45">Volume</div><div class="col-auto mx-0">:</div>
+<span class="mx-1">(L)</span>
+            <div class="col px-0" x-text="volume"></div></div>
+            <div class="line"><div class="col-45">Total Harga</div><div class="col-auto mx-0">:</div> <span class="mx-1">Rp.</span><div class="col " x-text="formatRupiah(computedTotalHarga)"></div></div>
+          </div>
+
+          <div class="line"><div class="col-45 ">Operator</div><div class="col-auto mx-0">:</div><div class="col px-1 text-uppercase" x-text="operator"></div></div>
+          <div class="garis">---------------------------------</div>
+          <div style="letter-spacing:-0.25px">CASH</div>
+          <div class="text-end" x-text="formatRupiah(computedTotalHarga)"></div>
+          <div class="garis">---------------------------------</div>
+          <div class="receipt-footer" x-html="formatFooter(footer || defaultFooter)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tombol Simpan -->
+    <div class="text-center mt-2">
+      <button class="btn btn-success btn-sm" @click="saveAsImage()">Save as Image</button>
+    </div>
+  </div>
+
+  <script>
+    function receiptApp() {
+      return {
+        logo: 'logo.png',
+        nomorOutlet: '',
+        namaSPBU: '',
+        alamat: '',
+        shift: '',
+        noTransaksi: '',
+        waktu: '',
+        pompa: '',
+        produk: 'PERTALITE',
+        volume: 0,
+        operator: '',
+        cash: 0,
+        noPlat: '',
+        footer: '',
+        selectedFont: 'Lucida Console, Monaco, monospace',
+        selectedPrinterWidth: '58',
+        hargaPerLiter: 10000,
+        defaultFooter: '<div class="p-0 m-0">ANDA MENGGUNAKAN SUBSIDI BBM DARI NEGARA : </div><div class="p-0 m-0">BIO SOLAR RP. 6.000,-/LITER DAN PERTAMINA RP. 3.250,-/LITER</div><div class="p-0 m-0">MARI GUNAKAN PERTAMAX SERIES DAN DEX SERIES, SUBSIDI HANYA UNTUK YANG BERHAK MENERIMA</div>',
+        get computedTotalHarga() {
+          return (parseFloat(this.volume) || 0) * this.hargaPerLiter;
+        },
+        formatWaktu(datetime) {
+  if (!datetime) return '';
+  const d = new Date(datetime);
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  const hh = String(d.getHours()).padStart(2, '0');
+  const min = String(d.getMinutes()).padStart(2, '0');
+  const ss = String(Math.floor(Math.random() * 60)).padStart(2, '0'); // random detik
+  return `${dd}/${mm}/${yyyy}&nbsp;&nbsp;${hh}:${min}:${ss}`;
+},
+        
+        formatRupiah(value) {
+        const number = parseFloat(value) || 0;
+        return number.toLocaleString('id-ID').replace(/\./g, ',');
+        },
+        formatFooter(text) {
+          return text.replace('NEGARA:', 'NEGARA:<br>');
+        },
+        saveAsImage() {
+  const receipt = document.getElementById('receiptPreview');
+  document.fonts.ready.then(() => {
+    html2canvas(receipt, {
+      scale: 5,
+      useCORS: true,
+      backgroundColor: '#fff'
+    }).then(canvas => {
+      const now = new Date(this.waktu || new Date());
+      const dd = String(now.getDate()).padStart(2, '0');
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const yyyy = now.getFullYear();
+      const hour = now.getHours();
+
+      const sesi = hour < 12 ? 'pagi' : 'malam';
+
+      const fileName = `POM_${this.namaSPBU || 'struk'}_${dd}-${mm}-${yyyy}_${sesi}.png`
+        .replace(/\s+/g, '_') // ganti spasi dengan underscore
+        .replace(/[^\w\-\.]/g, ''); // hapus karakter aneh
+
+      const link = document.createElement('a');
+      link.download = fileName;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  });
+},
+        downloadTemplate() {
+  const now = new Date(this.waktu || new Date());
+  const dd = String(now.getDate()).padStart(2, '0');
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const yyyy = now.getFullYear();
+  const hour = now.getHours();
+  const sesi = hour < 12 ? 'pagi' : 'sore';
+
+  // Hilangkan kata 'SPBU', spasi jadi underscore, dan karakter aneh
+  let nama = (this.namaSPBU || 'SPBU')
+    .replace(/SPBU/gi, '')
+    .trim()
+    .replace(/\s+/g, '_')
+    .replace(/[^\w\-]/g, '');
+
+  const fileName = `POM_${nama}_${dd}-${mm}-${yyyy}_${sesi}.json`;
+
+  const template = {
+    logo: this.logo,
+    nomorOutlet: this.nomorOutlet,
+    namaSPBU: this.namaSPBU,
+    alamat: this.alamat,
+    shift: this.shift,
+    noTransaksi: this.noTransaksi,
+    waktu: this.waktu,
+    pompa: this.pompa,
+    produk: this.produk,
+    volume: this.volume,
+    operator: this.operator,
+    cash: this.cash,
+    noPlat: this.noPlat,
+    footer: this.footer,
+    selectedFont: this.selectedFont,
+    selectedPrinterWidth: this.selectedPrinterWidth
+  };
+
+  const blob = new Blob([JSON.stringify(template, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
+},
+        uploadTemplate(event) {
+          const file = event.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const tpl = JSON.parse(e.target.result);
+              Object.assign(this, tpl);
+              alert('Template berhasil dimuat!');
+            } catch (err) {
+              alert('Gagal membaca file template!');
+              console.error(err);
+            }
+          };
+          reader.readAsText(file);
+        }
+      }
+    }
+    document.addEventListener('alpine:init', () => { Alpine.data('receiptApp', receiptApp); });
+  </script>
+</body>
+</html>
