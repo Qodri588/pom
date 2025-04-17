@@ -72,7 +72,7 @@
         <div class="receipt-container py-2" id="receiptPreview" :style="{ width: selectedPrinterWidth + 'mm' }">
           <div class="receipt-header">
             <template x-if="logo"><img class="my-1 mb-3" :src="logo" alt="Logo SPBU" style="max-height: 60px;" /></template>
-            <div class="mb-1" style="font-size:21px;" x-text="nomorOutlet || 'Nomor Outlet'" class="mb-1"></div>
+            <div class="mb-2" style="font-size:21px;" x-text="nomorOutlet || 'Nomor Outlet'"></div>
             <div>
               <div x-text="namaSPBU || 'Nama SPBU'"></div>
               <div x-text="alamat || 'Alamat SPBU'"></div>
