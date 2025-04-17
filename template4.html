@@ -164,7 +164,7 @@
   const receipt = document.getElementById('receiptPreview');
   document.fonts.ready.then(() => {
     html2canvas(receipt, {
-      scale: 5,
+      scale: 8,
       useCORS: true,
       backgroundColor: '#fff'
     }).then(canvas => {
@@ -252,5 +252,14 @@
     document.addEventListener('alpine:init', () => { Alpine.data('receiptApp', receiptApp); });
   </script>
 </body>
-  <footer class="center">Ini Template Mirip dengan Di Aplikasi Struk POM FORMAT 3</footer>
+<footer>
+<div style="width: 100%; text-align: center; margin: 10px 0;">
+  <a href="/" style="display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; background-color: #f0f0f0; border-radius: 8px; text-decoration: none; color: #333; font-weight: bold;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 8px;">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+    Back to Home
+  </a>
+</div>
+</footer>
 </html>

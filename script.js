@@ -43,7 +43,7 @@ function receiptApp() {
 
     saveAsImage() {
       const receipt = document.getElementById('receiptPreview');
-      html2canvas(receipt, { scale: 3, useCORS: true }).then(canvas => {
+      html2canvas(receipt, { scale: 8, useCORS: true }).then(canvas => {
         const outletName = this.namaSPBU.replace(/\s+/g, '_');
         const tgl = this.formatDate(this.waktu).replace(/\//g, '-');
         const noOutlet = this.nomorOutlet;

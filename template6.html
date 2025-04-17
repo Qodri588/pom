@@ -13,9 +13,6 @@ body {
   background-color: #f8f9fa;
 }
 
-.title-prev{
-  font-size: 18px;
-}
 .card {
   border: none;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -61,16 +58,41 @@ body {
 
 #receiptPreview {
   width: 58mm;
-  font-family: 'Lucida Console', Monaco, monospace;
+  font-family: 'TelidonHv', Sans-Serif;
   font-weight: normal;
   word-spacing: -3px;
   letter-spacing: -0.2px;
   margin-bottom: 1px;
   padding-bottom:2em;
   padding-top:2em;
-  font-size: 14px;
 }
 
+#receiptPreview h1 {
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h4 {
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+
+#receiptPreview h6 {
+  font-size: 12px;
+}
   </style>
 </head>
 <body>
@@ -165,9 +187,9 @@ body {
         
         <div class="receipt-container" id="receiptPreview">
           <!-- Header Struk -->
-          <div class=" title-prev fw-bold">
+          <h1>
             PERTAMINA PASTI PAS
-          </div>
+          </h1>
           
             <span class="ml-4">SPBU </span><span x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></span>
           
