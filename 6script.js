@@ -1,18 +1,22 @@
 function receiptApp() {
   return {
     // Field yang digunakan
-    nomorOutlet: '54.621.01',
-    namaSPBU: 'SPBU JETAK',
-    alamat: `<p>JALAN RAYA BABAT KM</p>
-<p>DS. BUNUT</p>
-<p>KEC. WIDANG</p>
-<p>KAB. TUBAN</p>`,
-    noTransaksi: '1975362',
-    waktu: '2025-04-05T05:00:00', 
-    pompa: '3',
-    volume: 3.7,
-    operator: 'Andri',
-    footer: 'SELAMAT JALAN & TERIMA KASIH',
+    nomorOutlet: '',
+    namaSPBU: '',
+    alamat: `<p>
+GANTI ALAMAT 1
+
+</p><br><p>
+
+GANTI ALAMAT 2
+</p>
+    `,
+    noTransaksi: '',
+    waktu: '', 
+    pompa: '',
+    volume: '',
+    operator: '',
+    footer: 'Terima Kasih dan Selamat Jalan',
     nopol: 'Not Entered',
 
     // Tambahkan computed property untuk menghitung total harga
@@ -68,6 +72,7 @@ function receiptApp() {
         pompa: this.pompa,
         volume: this.volume,
         operator: this.operator,
+        nopol: this.nopol,
         footer: this.footer
       };
       const jsonStr = JSON.stringify(template, null, 2);
@@ -101,6 +106,7 @@ function receiptApp() {
           this.volume = tpl.volume || 0;
           this.operator = tpl.operator || '';
           this.footer = tpl.footer || '';
+          this.nopol = tpl.nopol || '';
           alert("Config berhasil di-load!");
         } catch (err) {
           alert("Gagal membaca file config!");

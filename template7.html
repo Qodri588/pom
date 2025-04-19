@@ -20,9 +20,9 @@ body {
 
 .receipt-container {
   margin: 0 auto;
-  padding: 2px;
+  padding:0;
   background: #fff;
-  line-height: 19px;
+  line-height: 21px;
 }
 
 .receipt-header {
@@ -208,16 +208,15 @@ body {
             PERTAMINA PASTI PAS
           </h1> -->
           
-          <div class="no-spbu" style="font-weight:light">
+          <div class="no-spbu" style="font-weight:normal">
             <span class="noot mb-2">SPBU </span><span class="noot" x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></span>
           </div>
-          <br class="my-1">
-          
-          <span class="receipt-title" x-html="alamat || 'Alamat SPBU'"></span>
-          <br class="my-1">
-          <!-- Informasi Transaksi -->
-          
+          <br>
+          <div>
+          <span class="receipt-title" x-html="alamat || 'Alamat SPBU'"></span></div>
   
+          
+  <br>
   <div class="info-pembelian">
 <!-- Tampilan tanggal dan waktu -->
   <div style="display: flex; justify-content: space-between;">
@@ -229,9 +228,10 @@ body {
     </div>
 
               </div>
-            
-<span class="my-1">Receipt No. :</span class="my-1"> <span x-text="noTransaksi"></span>
+ <div class="d-flex">
+<div>Receipt No. :&nbsp;</div> <div x-text="noTransaksi"></div>
   </div>
+</div>
   <br>
             
             
@@ -264,7 +264,14 @@ body {
                 <div class="col text-end fw-bold" x-html="computedTotalHarga ? formatRupiah(computedTotalHarga) : ''"></div>
             </div>
             <!-- Informasi Tambahan -->
-           
+<br>        
+<div class="line d-flex align-items-center">
+  <div class="col-auto text-start">Vehicle No.</div>
+  <div class="col-auto mr-3 px-1"></div>
+  <div class="col text-end">
+    <span x-text="nopol"></span>
+  </div>
+</div>
               <br class="my-1">
               <!-- Footer Struk -->
               <div class="receipt-footer" x-text="footer || 'Terima Kasih dan Selamat Jalan'"></div>
