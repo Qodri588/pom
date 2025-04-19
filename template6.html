@@ -54,45 +54,36 @@ body {
   src: url('TelidonHv.woff') format('woff');
 }
 
-
+@font-face {
+  font-family: 'bitMatrix-A2';
+  src: url('font/bitMatrix-A2.woff') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 #receiptPreview {
   width: 58mm;
-  font-family: 'TelidonHv', Sans-Serif;
+  font-family: 'bitMatrix-A2', Sans-Serif;
   font-weight: normal;
   word-spacing: -3px;
   letter-spacing: -0.2px;
   margin-bottom: 1px;
   padding-bottom:2em;
   padding-top:2em;
-}
-
-#receiptPreview h1 {
-  font-size: 21px;
-  font-weight: bold;
-  margin-bottom: 1px;
-}
-
-#receiptPreview h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 1px;
-}
-
-#receiptPreview h3 {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 1px;
-}
-
-#receiptPreview h4 {
   font-size: 14px;
-  margin-bottom: 1px;
 }
 
-#receiptPreview h6 {
-  font-size: 12px;
+
+#receiptPreview p{
+  padding: 0;
+  margin: 0;
 }
+#receiptPreview .no-spbu {
+  font-size: 21px;
+  font-weight: normal;
+  margin: 0;
+}
+
   </style>
 </head>
 <body>
@@ -122,12 +113,17 @@ body {
           </div>
           
           <!-- Alamat -->
-          <div class="row">
-            <div class="col-12 mb-2">
-              <label class="input-label">Alamat</label>
-              <input type="text" class="form-control form-control-sm" x-model="alamat" placeholder="Alamat" />
-            </div>
-          </div>
+     <div class="row">
+  <div class="col-12 mb-2">
+    <label class="input-label">Alamat</label>
+    <textarea 
+      class="form-control form-control-sm" 
+      style="resize: vertical; min-height: 120px;" 
+      x-model="alamat" 
+      placeholder="Alamat">
+    </textarea>
+  </div>
+</div>
           <!-- No. Transaksi -->
 
           <!-- Waktu & Pulau/Pompa -->
@@ -181,20 +177,15 @@ body {
       <div class="col-md-6">
         <!-- Start Preview Section -->
         <h6 class="text-center mb-2">Preview Struk</h6>
-        
-        
-        
-        
         <div class="receipt-container" id="receiptPreview">
           <!-- Header Struk -->
-          <h1>
-            PERTAMINA PASTI PAS
-          </h1>
+          <div class="w-100">
+            <span class="no-spbu">SPBU </span><span class="no-spbu" x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></span>
+            </div>
           
-            <span class="ml-4">SPBU </span><span x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></span>
-          
-          <br><br>
-          <span class="receipt-title" x-text="alamat || 'Alamat SPBU'"></span>
+          <div class="w-100">
+          <span class="receipt-title" x-html="alamat || 'Alamat SPBU'"></span>
+          </div>
 
           <!-- Informasi Transaksi -->
           
