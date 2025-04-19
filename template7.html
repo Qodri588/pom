@@ -48,7 +48,7 @@ body {
   font-size: 10px;
 }
 
-.my-br{
+.my-1{
   margin: 2px;
   line-height: 1px;
 }
@@ -79,8 +79,8 @@ body {
   width: 58mm;
   font-family: 'bitMatrix-A2', Sans-Serif;
   font-weight: normal;
-  word-spacing: -3px;
-  letter-spacing: -0.2px;
+  word-spacing: -2px;
+  letter-spacing: -0.1px;
   margin-bottom: 1px;
   padding-bottom:0.5em;
   padding-top:0.5em;
@@ -202,7 +202,7 @@ body {
         
         
         
-        <div class="receipt-container" id="receiptPreview">
+        <div class="receipt-container pt-4 pb-3" id="receiptPreview">
           <!-- Header Struk -->
 <!--           <h1>
             PERTAMINA PASTI PAS
@@ -211,17 +211,14 @@ body {
           <div class="no-spbu" style="font-weight:light">
             <span class="noot mb-2">SPBU </span><span class="noot" x-text="nomorOutlet ? nomorOutlet : 'Nomor Outlet'"></span>
           </div>
-          <br class="my-br">
+          <br class="my-1">
           
           <span class="receipt-title" x-html="alamat || 'Alamat SPBU'"></span>
-          <br class="my-br">
+          <br class="my-1">
           <!-- Informasi Transaksi -->
           
   
-          <div class="info-pembelian">
-            
-          
-            
+  <div class="info-pembelian">
 <!-- Tampilan tanggal dan waktu -->
   <div style="display: flex; justify-content: space-between;">
     <div class="text-start">
@@ -232,9 +229,10 @@ body {
     </div>
 
               </div>
-            </div>
-<span>Receipt No. :</span> <span x-text="noTransaksi"></span>
-                
+            
+<span class="my-1">Receipt No. :</span class="my-1"> <span x-text="noTransaksi"></span>
+  </div>
+  <br>
             
             
             <!-- Detail Pembelian -->
@@ -267,7 +265,7 @@ body {
             </div>
             <!-- Informasi Tambahan -->
            
-              <br class="my-br">
+              <br class="my-1">
               <!-- Footer Struk -->
               <div class="receipt-footer" x-text="footer || 'Terima Kasih dan Selamat Jalan'"></div>
             </div>
